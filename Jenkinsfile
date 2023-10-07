@@ -18,19 +18,19 @@ pipeline {
             }
         }
         //sonar-scanner command expect sonar-project.properties should be available
-        stage('Sonar Scan')
+        // stage('Sonar Scan')
+        // {
+        //     steps{
+        //         sh '''
+        //         ls -ltr
+        //         sonar-scanner
+        //         '''
+        //     }
+        // }
+        stage('Build')
         {
             steps{
-                sh '''
-                ls -ltr
-                sonar-scanner
-                '''
-            }
-        }
-        stage('Deploy')
-        {
-            steps{
-                echo "Deployment"
+                sh 'ls -ltrh'
             }
         }
     }
