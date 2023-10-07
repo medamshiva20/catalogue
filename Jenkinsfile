@@ -30,8 +30,17 @@ pipeline {
         stage('Build')
         {
             steps{
-                sh 'ls -ltrh'
+                sh '''
+                ls -ltrh
+                zip -r ./* --exclude=.git --exclude=.zip
+                '''
             }
         }
+        // post{
+        //     always{
+        //         echo "cleaning up workspace"
+        //         deleteDir()
+        //     }
+        // }
     }
 }
