@@ -32,7 +32,7 @@ pipeline {
             steps{
                 sh '''
                 ls -ltrh
-                zip -r catalogue.zip --exclude=.git --exclude=.zip
+                zip -r catalogue.zip .* --exclude=.git --exclude=.zip
                 '''
             }
         }
