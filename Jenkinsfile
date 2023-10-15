@@ -1,15 +1,6 @@
 pipeline {
     agent { node { label 'AGENT-1' } }
     stages{
-        stage('Get Version'){
-            steps{
-                script{
-                    def packageJson = readJSON file: 'package.json'
-                    def packageVersion = packageJSON.version
-                    echo "${packageJSONVersion}"
-                }
-            }
-        }
         stage('Install dependencies')
         {
             steps{
@@ -30,6 +21,7 @@ pipeline {
         stage('Sonar Scan')
         {
             steps{
+                echo "Sonar scan done"
                 sh '''
                 ls -ltr
                 sonar-scanner
