@@ -36,6 +36,12 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy')
+        {
+            steps{
+                echo "Deploy to production"
+            }
+        }
         // stage('Publish Artifact')
         // {
         //     steps{
