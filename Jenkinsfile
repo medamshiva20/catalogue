@@ -22,10 +22,6 @@ pipeline {
         {
             steps{
                 echo "Sonar scan done"
-                sh '''
-                ls -ltr
-                sonar-scanner
-                '''
             }
         }
         stage('Build')
@@ -37,6 +33,13 @@ pipeline {
                 '''
             }
         }
+         stage('SAST')
+        {
+            steps{
+                echo "SAST done here"
+                echo "version: $packageVersion"
+            }
+        }
         stage('Publish Artifact')
         {
             steps{
@@ -45,7 +48,7 @@ pipeline {
                     protocol: 'http',
                     nexusUrl: '172.31.34.61:8081/',
                     groupId: 'com.roboshop',
-                    version: '1.0.2',
+                    version: '$packageVersion',
                     repository: 'catalogue',
                     credentialsId: 'nexus-auth',
                     artifacts: [
@@ -57,10 +60,18 @@ pipeline {
                 )
             }
         }
+        //Here I need to configure downstream job. I have to pass package version for deployment
         stage('Deploy')
         {
             steps{
-                echo "Deploy to production"
+                script
+                {
+                    echo "Deployment"
+                        def params = [
+                            string(name: 'version', value: "$packageVersion")
+                        ]
+                        build job: "../catalogue-deploy", wait: true, parameters: params
+                }
             }
         }
     }
