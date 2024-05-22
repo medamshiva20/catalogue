@@ -1,11 +1,32 @@
-#!groovy
-//It means the libraries will be download and accessible at run time 
-@Library('roboshop-library') _
+pipeline{
+    agent { node {label 'label1'} }
+    stages{
+        stage('Install Dependencies')
+        {
+            steps{
+                sh 'npm install'
+            }
+        }
+        stage('Unit Test')
+        {
+            steps{
+                echo "Unit Testing is done here"
+            }
+        }
+    }
+}
 
-def configMap = [
-    application: "nodeJSVM",
-    component: "catalogue"
-]
 
-//This is .groovy file name and function inside it 
-pipelineDecission.decidePipeline(configMap)
+
+
+// #!groovy
+// //It means the libraries will be download and accessible at run time 
+// @Library('roboshop-library') _
+
+// def configMap = [
+//     application: "nodeJSVM",
+//     component: "catalogue"
+// ]
+
+// //This is .groovy file name and function inside it 
+// pipelineDecission.decidePipeline(configMap)
