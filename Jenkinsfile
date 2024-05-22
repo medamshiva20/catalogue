@@ -13,6 +13,13 @@ pipeline{
                 echo "Unit Testing is done here"
             }
         }
+        stgae('Sonar Scanner')
+        {
+            steps{
+                sh 'ls -ltr'
+                sh 'sonar-scanner'
+            }
+        }
     }
 }
 
