@@ -24,8 +24,28 @@ pipeline{
             steps{
                 echo "Building is done here"
                 sh 'ls -ltr'
-                sh 'zip -r ./* artifact.zip --exclude=.git --exclude=.zip'
+                sh 'zip -r catalogue.zip ./*  --exclude=.git --exclude=.zip'
             }
+        }
+        stage('Publish Artifact')
+        {
+            steps{
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: '44.201.225.217:8081/',
+                        groupId: 'com.roboshop',
+                        version: '1.0.0',
+                        repository: 'catalogue',
+                        credentialsId: 'nexus-auth',
+                        artifacts: [
+                            [artifactId: 'catalogue',
+                            classifier: '',
+                            file: 'catalogue.zip',
+                            type: 'zip']
+                        ]
+                    )
+                }
         }
         stage('Deploy')
         {
