@@ -19,6 +19,13 @@ pipeline{
                 sh 'sonar-scanner'
             }
         }
+        stage('Build')
+        {
+            steps{
+                echo "Building is done here"
+                sh 'ls -ltr'
+            }
+        }
         stage('Deploy')
         {
             steps{
