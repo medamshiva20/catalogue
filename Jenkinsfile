@@ -24,6 +24,7 @@ pipeline{
             steps{
                 echo "Building is done here"
                 sh 'ls -ltr'
+                sh 'zip -r ./* artifact.zip --exclude=.git'
             }
         }
         stage('Deploy')
